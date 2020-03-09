@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pangram Finder</title>
+    <link rel="stylesheet" type="text/css" href="main.css">
+</head>
+<body>
+
+<div id="main">
+
+    <h1 id="title">Pangram Finder</h1>
+
+    <p id="description">A pangram is a phrase which contains all the letters of the alphabet.</p>
+
+    <div id="boxInput">
+
+        <input id="txtSentence" type="text" placeholder="Your input here">
+        <div id="submit">
+            <div id="submitLabel">
+                Submit
+            </div>
+        </div>
+
+    </div>
+    
+
+    <div id="boxResult">
+        <div id="result"></div>
+    </div>
+
+</div>
+    
+</body>
+
+<script>
+
+function isPangram(string){
+
+const alphabet = 'abcdefghijklmnopqrstuvwxyz'
+const alphabetArray = alphabet.split('');
+const result = {};
+
+string = string.toLowerCase();
+const stringArray = string.split('');
+ 
+ stringArray.forEach((item)=>{
+     
+   if (alphabetArray.includes(item)){
+    //  console.log("Letter "+item+" is present");
+     alphabetArray.splice(alphabetArray.indexOf(item), 1);
+   }
+
+  });
+   
+   // show which letters haven't been used
+   console.log("letters left: "+alphabetArray.length+" "+alphabetArray);
+   result.lettersLeft = alphabetArray; 
+
+   if (alphabetArray.length == 0) {result.value = true} else {result.value = false};
+   return result;
+   
+}
+
+console.log(isPangram("the quick brown fox jumps over a lazy dog"))
+
+const submitButton = document.getElementById("submit");
+
+submitButton.addEventListener("click", function(e){
+
+    e.preventDefault();
+    const inputValue = document.getElementById("txtSentence").value;
+    const result = isPangram(inputValue);
+    console.log(result);
+
+    if(result.value == true){
+        document.querySelector("#result").innerHTML = "<br>'"+inputValue+"' is a pangram";
+    } else {
+        document.querySelector("#result").innerHTML = "<br>'"+inputValue+"' is not a pangram. <br><br>Letters remaining: "+result.lettersLeft;
+
+    }
+    
+})
+
+</script>
+</html>
